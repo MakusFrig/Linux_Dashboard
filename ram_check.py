@@ -8,7 +8,7 @@ import os
 
 
 root = Tk()
-root.geometry('210x160+1370+700')
+root.geometry('210x230+1350+650')
 
 root.config(bg = '#ff0000')
 
@@ -24,7 +24,7 @@ root.attributes('-alpha', 0.6)
 
 
 root.lift()
-root.wm_attributes("-topmost", True)
+#root.wm_attributes("-topmost", True)
 
 
 def exit_on_command():
@@ -59,6 +59,14 @@ def get_info():
     pipe = Popen('cat /proc/cpuinfo', stdout=PIPE, stderr=None, shell=True)
 
     cpu = pipe.communicate()[0].decode('utf-8').split("\n")
+
+    pipe = Popen('sensors', stdout=PIPE, stderr=None, shell=True)
+
+    temps = pipe.communicate()[0].decode('utf-8').split("\n")[3:7]
+
+    for i in range(len(temps)):
+        temps[i] = temps[i].split("(")[0].replace(" ", "")
+
     for i in range(len(cpu)):
         cpu[i] = cpu[i].split(":")
 
@@ -90,8 +98,13 @@ def get_info():
 
         temp+=f'{temp_line[0]}\t{num}GB\n'
 
+
+
     for i in core:
         temp += f"{i}\n"
+
+    for i in temps:
+        temp+= f"{i}\n"
 
     text = temp
     
@@ -104,7 +117,7 @@ def end_script(event):
 
 get_info()
 
-exit.place(x = 198, y = 138)
+exit.place(x = 198, y = 208)
 
 info_label.place(x = 0, y =0)
 
@@ -117,4 +130,5 @@ while True:
     get_info()
     root.update()
     time.sleep(1)
+
 
