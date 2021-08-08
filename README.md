@@ -1,5 +1,5 @@
-# Linux_Ram_Check
-This is my ram checker for the linux operating system.
+# Linux_Dashboard
+This is my utility checker for the linux operating system.
 
 
 #Use
